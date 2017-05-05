@@ -1,0 +1,82 @@
+{% extends 'startbootstrap-blog-4-dev/article_base.html' %}
+
+{% block content %}
+<div class="col-lg-8">
+    <!-- Title -->
+    <h1 class="mt-4">{{ article.title }}</h1>
+
+    <!-- Author -->
+    <p class="lead">by {{ article.author }}</p>
+
+    <hr>
+
+    <!-- Date/Time -->
+    <p>Posted on {{ article.created_date }}</p>
+
+    <hr>
+
+    <!-- Post Content -->
+    {% for content in contents %}
+        {% if content.html_tag == content.h1 %}
+        <h1{% if content.html_class %} class="{{ content.html_class }}"{% endif %}>{{ content.text }}</h1>
+
+        {% elif content.html_tag == content.h2 %}
+        <h2{% if content.html_class %} class="{{ content.html_class }}"{% endif %}>{{ content.text }}</h2>
+
+        {% elif content.html_tag == content.h3 %}
+        <h3{% if content.html_class %} class="{{ content.html_class }}"{% endif %}>{{ content.text }}</h3>
+
+        {% elif content.html_tag == content.h4 %}
+        <h4{% if content.html_class %} class="{{ content.html_class }}"{% endif %}>{{ content.text }}</h4>
+
+        {% elif content.html_tag == content.h5 %}
+        <h5{% if content.html_class %} class="{{ content.html_class }}"{% endif %}>{{ content.text }}</h5>
+
+        {% elif content.html_tag == content.h6 %}
+        <h6{% if content.html_class %} class="{{ content.html_class }}"{% endif %}>{{ content.text }}</h6>
+
+        {% elif content.html_tag == content.p %}
+        <p{% if content.html_class %} class="{{ content.html_class }}"{% endif %}>{{ content.text|linebreaks }}</p>
+
+        {% elif content.html_tag == content.a %}
+        <p><a{% if content.html_class %} class="{{ content.html_class }}"{% endif %} href="{{ content.href }}">{{ content.text }}</a></p>
+
+        {% elif content.html_tag == content.img %}
+        <img{% if content.html_class %} class="{{ content.html_class }}"{% endif %} src="{{ content.src }}" alt="{{ content.alt }}">
+
+        {% endif %}
+    {% endfor %}
+
+    {% if article.source %}
+    <p>reference: <a href="{{ article.source }}">{{ article.source }}</a></p>
+    {% endif %}
+
+    <hr>
+
+    <!-- Comments Form -->
+    <div class="card my-4">
+        <h5 class="card-header">Leave a Comment:</h5>
+        <div class="card-block">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input class="btn btn-primary" type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+
+    <!-- Single Comment -->
+    {% if comments %}
+        {% for comment in comments %}
+        <div class="card my-4">
+            <h5 class="card-header">{{ comment.commenter }}</h5>
+            <div class="card-block">                
+                <p>{{ comment.text }}</p>
+                <p>{{ comment.comment_date }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+
+</div>
+{% endblock %}
