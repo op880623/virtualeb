@@ -9,6 +9,9 @@ class Classification(models.Model):
     name = models.CharField(max_length=200)
     parent = models.ForeignKey('self', blank=True, null=True)
 
+    def slug(self):
+        return slugify(self.name, allow_unicode=True)
+
     def list_child(self):
         return Classification.objects.filter(parent=self)
 
@@ -29,9 +32,9 @@ class Classification(models.Model):
 
     def format_url(self):
         if self.parent:
-            return self.parent.format_url()+self.name+'/'
+            return self.parent.format_url() + self.slug() + '/'
         else:
-            return self.name+'/'
+            return self.slug() + '/'
 
     def __str__(self):
         return self.name
@@ -42,7 +45,7 @@ class Article(models.Model):
     title = models.CharField(max_length=200)
     created_date = models.DateTimeField(default=timezone.now)
     updated_date = models.DateTimeField(blank=True, null=True)
-    classification = models.ForeignKey(Classification, blank=True, null=True)
+    classification = models.ForeignKey(Classification)
     source = models.URLField(max_length=200, blank=True, null=True)
 
     def slug(self):
