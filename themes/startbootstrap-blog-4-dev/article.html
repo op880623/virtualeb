@@ -16,7 +16,7 @@
     <hr>
 
     <!-- Post Content -->
-    {% for content in contents %}
+    {% for content in article.context %}
         {% if content.html_tag == content.h1 %}
         <h1{% if content.html_class %} class="{{ content.html_class }}"{% endif %}>{{ content.text }}</h1>
 
@@ -70,7 +70,7 @@
         {% for comment in comments %}
         <div class="card my-4">
             <h5 class="card-header">{{ comment.commenter }}</h5>
-            <div class="card-block">                
+            <div class="card-block">
                 <p>{{ comment.text }}</p>
                 <p>{{ comment.comment_date }}</p>
             </div>
@@ -79,4 +79,14 @@
     {% endif %}
 
 </div>
+{% endblock %}
+
+
+
+{% block categories %}
+    {% if categories %}
+    {% for category in categories %}
+    <li><a href="{% url 'url_list' category.format_url %}">{{ category.name }}</a></li>
+    {% endfor %}
+    {% endif %}
 {% endblock %}

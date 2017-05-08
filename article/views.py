@@ -13,15 +13,16 @@ def list(request, category):
     articles = Article.objects.filter(classification=classification)
     children = classification.list_child()
     if classification.format_url() == category:
-        return render(request, 'startbootstrap-blog-4-dev/list.html', {'category': classification, 'children': children, 'articles': articles})
+        categories = get_list_or_404(Classification)
+        return render(request, 'startbootstrap-blog-4-dev/list.html', {'category': classification, 'children': children, 'articles': articles, 'categories': categories})
     else:
         return redirect(reverse('url_list_redirect', kwargs={'category': classification.format_url()}))
 
 def list_all(request):
     classification = ''
-    articles = Article.objects.filter(classification__isnull=True)
-    children = Classification.objects.filter(parent__isnull=True)
-    return render(request, 'startbootstrap-blog-4-dev/list.html', {'category': classification, 'children': children, 'articles': articles})
+    articles = Article.objects.all()
+    categories = get_list_or_404(Classification)
+    return render(request, 'startbootstrap-blog-4-dev/list.html', {'category': classification, 'articles': articles, 'categories': categories})
 
 def article_redirect(request, id):
     article = get_object_or_404(Article, id=int(id))
@@ -39,6 +40,7 @@ def article(request, id, slug='', category=''):
                 comment.save()
         form = CommentForm()
         comments = Comment.objects.filter(belong_to=article).order_by('comment_date')
-        return render(request, 'startbootstrap-blog-4-dev/article.html',  {'article': article, 'contents': article.context(), 'form': form, 'comments': comments})
+        categories = get_list_or_404(Classification)
+        return render(request, 'startbootstrap-blog-4-dev/article.html',  {'article': article, 'form': form, 'comments': comments, 'categories': categories})
     else:
         return redirect(reverse('url_article_redirect', kwargs={'id': str(int(id)).zfill(5)}))
