@@ -10,19 +10,18 @@ def list_redirect(request, category):
 
 def list(request, category):
     classification = get_object_or_404(Classification, name__iregex=re.sub('-', '.', '^'+category.split('/')[-2]+'$'))
-    articles = Article.objects.filter(classification=classification)
-    children = classification.list_child()
     if classification.format_url() == category:
+        articles = Article.objects.filter(classification=classification)
+        children = classification.list_child()
         categories = get_list_or_404(Classification)
-        return render(request, 'startbootstrap-blog-4-dev/list.html', {'category': classification, 'children': children, 'articles': articles, 'categories': categories})
+        return render(request, 'startbootstrap-blog-4-dev/list.html', {'list_name': classification.name, 'children': children, 'articles': articles, 'categories': categories})
     else:
         return redirect(reverse('url_list_redirect', kwargs={'category': classification.format_url()}))
 
 def list_all(request):
-    classification = ''
     articles = Article.objects.all()
     categories = get_list_or_404(Classification)
-    return render(request, 'startbootstrap-blog-4-dev/list.html', {'category': classification, 'articles': articles, 'categories': categories})
+    return render(request, 'startbootstrap-blog-4-dev/list.html', {'list_name': 'All articles', 'articles': articles, 'categories': categories})
 
 def article_redirect(request, id):
     article = get_object_or_404(Article, id=int(id))
@@ -30,7 +29,6 @@ def article_redirect(request, id):
 
 def article(request, id, slug='', category=''):
     article = get_object_or_404(Article, id=int(id))
-
     if slug == article.slug() and id == str(int(id)).zfill(5) and category == article.classification.format_url()[:-1]:
         if request.method == 'POST':
             if CommentForm(request.POST).is_valid():

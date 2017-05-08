@@ -80,13 +80,3 @@
 
 </div>
 {% endblock %}
-
-
-
-{% block categories %}
-    {% if categories %}
-    {% for category in categories %}
-    <li><a href="{% url 'url_list' category.format_url %}">{{ category.name }}</a></li>
-    {% endfor %}
-    {% endif %}
-{% endblock %}

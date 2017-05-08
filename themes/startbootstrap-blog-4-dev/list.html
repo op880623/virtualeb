@@ -4,11 +4,7 @@
 <div class="col-md-8">
 
     <!-- Title -->
-    {% if category %}
-    <h1 class="mt-4">{{ category }}</h1>
-    {% else %}
-    <h1 class="mt-4">All articles</h1>
-    {% endif %}
+    <h1 class="mt-4">{{ list_name }}</h1>
 
     <!-- Blog Directory -->
     {% if children %}
@@ -44,14 +40,4 @@
     </ul>
 
 </div>
-{% endblock %}
-
-
-
-{% block categories %}
-    {% if categories %}
-    {% for category in categories %}
-    <li><a href="{% url 'url_list' category.format_url %}">{{ category.name }}</a></li>
-    {% endfor %}
-    {% endif %}
 {% endblock %}
