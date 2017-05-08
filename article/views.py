@@ -9,7 +9,7 @@ def list_redirect(request, category):
     return redirect(reverse('url_list', kwargs={'category': category}))
 
 def list(request, category):
-    classification = Classification.objects.get(name__iregex=re.sub('-', '.', '^'+category.split('/')[-2]+'$'))
+    classification = get_object_or_404(Classification, name__iregex=re.sub('-', '.', '^'+category.split('/')[-2]+'$'))
     articles = Article.objects.filter(classification=classification)
     children = classification.list_child()
     if classification.format_url() == category:
