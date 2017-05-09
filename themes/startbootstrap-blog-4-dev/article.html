@@ -71,8 +71,8 @@
         <div class="card my-4">
             <h5 class="card-header">{{ comment.commenter }}</h5>
             <div class="card-block">
-                <p>{{ comment.text }}</p>
-                <p>{{ comment.comment_date }}</p>
+                {{ comment.text|linebreaks }}
+                {{ comment.comment_date|linebreaks }}
             </div>
         </div>
         {% endfor %}
