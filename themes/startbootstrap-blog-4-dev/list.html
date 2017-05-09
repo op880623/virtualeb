@@ -6,17 +6,6 @@
     <!-- Title -->
     <h1 class="mt-4">{{ list_name }}</h1>
 
-    <!-- Blog Directory -->
-    {% if children %}
-    {% for child in children %}
-    <div class="card mb-4">
-        <div class="card-block">
-            <h2 class="card-title"><a href="{% url 'url_list' child.format_url %}" class="btn btn-primary">{{ child.name }} &rarr;</a></h2>
-        </div>
-    </div>
-    {% endfor %}
-    {% endif %}
-
     <!-- Blog Article -->
     {% if articles %}
     {% for article in articles %}
@@ -24,7 +13,7 @@
         <div class="card-block">
             <h2 class="card-title">{{ article.title }}</h2>
             {% comment %}<p class="card-text">{{ article.next_content.text|truncatewords:20 }}</p>{% endcomment %}
-            <a href="{% url 'url_article_redirect' article.id %}" class="btn btn-primary">Read More &rarr;</a>
+            <a href="{% url 'url_article' article.id %}" class="btn btn-primary">Read More &rarr;</a>
         </div>
         <div class="card-footer text-muted">
             Posted on {{ article.created_date }} by {{ article.author }}</a>
