@@ -41,7 +41,7 @@
         </button>
         <div class="container">
             <a class="navbar-brand" href="{% url 'url_list' %}">Virtual Experimental Bench</a>
-            <div class="collapse navbar-collapse" id="navbarExample">
+            <!--<div class="collapse navbar-collapse" id="navbarExample">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
                         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
@@ -56,7 +56,7 @@
                         <a class="nav-link" href="#">Contact</a>
                     </li>
                 </ul>
-            </div>
+            </div>-->
         </div>
     </nav>
 
@@ -70,10 +70,10 @@
             {% endblock %}
 
             <!-- Sidebar Widgets Column -->
-            <div class="col-md-4">
+            <div class="col-md-3">
 
                 <!-- Search Widget -->
-                <div class="card my-4">
+                <div class="card my-3">
                     <h5 class="card-header">Search</h5>
                     <div class="card-block">
                         <div class="input-group">
@@ -86,10 +86,10 @@
                 </div>
 
                 <!-- Categories Widget -->
-                <div class="card my-4">
+                <div class="card my-3">
                     <h5 class="card-header">Categories</h5>
                     <div class="card-block">
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <ul class="list-unstyled mb-0">
                                 {% if categories %}
                                 {% for category in categories %}
@@ -102,10 +102,16 @@
                 </div>
 
                 <!-- Side Widget -->
-                <div class="card my-4">
-                    <h5 class="card-header">Side Widget</h5>
+                <div class="card my-3">
+                    <h5 class="card-header">about me</h5>
                     <div class="card-block">
-                        You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+                        <div class="col-lg-12">
+                            <ul class="list-unstyled mb-0">
+                                <li><p>Hong Tai-Rong:</p></li>
+                                <li><a href="https://github.com/op880623">github</a></li>
+                                <li><a href="https://lol-champion-info-site.herokuapp.com/">lol champion info site</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
