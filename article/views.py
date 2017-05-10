@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.core.paginator import Paginator
 from .models import Article, Classification, Comment
 from .forms import CommentForm
+from django.http import HttpResponse
 import re
 
 
@@ -17,8 +18,13 @@ def list(request, category=''):
     except:
         if category:
             return redirect(reverse('url_list_all'))
-        articles = Article.objects.all()
-        list_name = 'All articles'
+        if request.GET.get('search'):
+            # return HttpResponse(request.GET.get('search'))
+            articles = Article.objects.filter(title__icontains=request.GET.get('search'))
+            list_name = 'Search result'
+        else:
+            articles = Article.objects.all()
+            list_name = 'All articles'
 
     paginator = Paginator(articles, 10)
     page = request.GET.get('page')
