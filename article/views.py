@@ -11,7 +11,7 @@ def list(request, category=''):
     try:
         classification = Classification.objects.get(name__iregex=re.sub('-', '.', '^'+category.split('/')[-2]+'$'))
         if classification.format_url() == category:
-            articles = Article.objects.filter(classification=classification)
+            articles = Article.objects.filter(classification=classification).order_by('-created_date')
             list_name = classification.name
         else:
             return redirect(reverse('url_list', kwargs={'category': classification.format_url()}))
@@ -23,7 +23,7 @@ def list(request, category=''):
             articles = Article.objects.filter(title__icontains=request.GET.get('search'))
             list_name = 'Search result'
         else:
-            articles = Article.objects.all()
+            articles = Article.objects.order_by('-created_date')
             list_name = 'All articles'
 
     paginator = Paginator(articles, 10)
